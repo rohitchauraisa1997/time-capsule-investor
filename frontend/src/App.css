@@ -1,0 +1,47 @@
+body{
+    background-color: #eeee;
+}
+
+/* Add this to your CSS file */
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+}
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.key-value-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px;
+    border: 1px solid #ccc; 
+    text-align: center;
+    width: 450px;
+    margin-top: 10px;
+    padding: 10px;
+    /* background-color: blue; */
+}
+
+.key {
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+.value {
+    /* font-style: italic; */
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
