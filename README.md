@@ -4,8 +4,8 @@ The project is kind of a mono-repo built using:-
 1. FastApi as the backend web server.
 2. ReactJs as the frontend.
 3. MongoDB & MysqlDB for database requirements.
-4. Zerodha's kiteconnect apis for placing GTT orders.
-5. Financialmodelingprep apis for historical and ltp data.
+4. Zerodha's kiteconnect apis for ltp and placing GTT orders.
+5. Financialmodelingprep apis for historical data.
 6. HighCharts Apis for rendering Charts.
 7. docker compose for hosting 
 
