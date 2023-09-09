@@ -1,0 +1,153 @@
+version: "3.9"
+
+services:
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: bgt_frontend
+    ports:
+      - "5000:5000"
+    volumes:
+    # to make changes dynamically without reloading docker compose
+      - ./frontend/src:/app/src
+      - ./frontend/index.html:/app/index.html
+    depends_on:
+      - backend
+
+  cron:
+    build:
+      context: ./cron
+      dockerfile: Dockerfile
+    volumes:
+      - ./cron/nasdaq_stocks_cron.py:/app/nasdaq_stocks_cron.py
+      - ./cron/nse_stocks_cron.py:/app/nse_stocks_cron.py
+      - ./cron/utils.py:/app/utils.py
+      - ./cron/logs:/var/log/cron
+    restart: always
+    depends_on:
+      - mysqldb
+      - mysqldb2
+
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: bgt_backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./server:/code
+    depends_on:
+      - usermysqldb
+      - mysqldb
+      - mysqldb2
+      - mongodb
+      - mongodb2
+
+  usermysqldb:
+    image: mysql:8.0.34
+    user: root:root
+    container_name: bgt_user_mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: users_db
+      MYSQL_PASSWORD: root
+      MYSQL_TCP_PORT: 65334
+    volumes:
+      - ./database/usermysqldb/mysql-init-files:/docker-entrypoint-initdb.d
+      - ./database/usermysqldb/db:/var/lib/mysql:delegated
+    ports:
+      - 65333:65334
+    restart: unless-stopped
+    # u can tweak the healthcheck parameters for faster loading of mysql and hence the app.
+    # https://docs.docker.com/engine/reference/builder/#healthcheck
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=root
+      interval: 10s
+      timeout: 10s
+      retries: 20
+      start_period: 20s
+
+  mysqldb:
+    image: mysql:8.0.34
+    user: root:root
+    container_name: bgt_mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bucket_gains_tracker_mysqldb
+      MYSQL_PASSWORD: root
+      MYSQL_TCP_PORT: 65334
+    volumes:
+      # - ./database/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./database/mysql/db:/var/lib/mysql:delegated
+    ports:
+      - 65334:65334
+    restart: unless-stopped
+    # u can tweak the healthcheck parameters for faster loading of mysql and hence the app.
+    # https://docs.docker.com/engine/reference/builder/#healthcheck
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=root
+      interval: 10s
+      timeout: 10s
+      retries: 20
+      start_period: 20s
+
+  mysqldb2:
+    image: mysql:8.0.34
+    user: root:root
+    container_name: bgt_mysql_container2
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bucket_gains_tracker_mysqldb
+      MYSQL_PASSWORD: root
+      MYSQL_TCP_PORT: 65334
+    volumes:
+      # - ./database/mysql2/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./database/mysql2/db:/var/lib/mysql:delegated
+    ports:
+      - 65335:65334
+    restart: unless-stopped
+    # u can tweak the healthcheck parameters for faster loading of mysql and hence the app.
+    # https://docs.docker.com/engine/reference/builder/#healthcheck
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=root
+      interval: 10s
+      timeout: 10s
+      retries: 20
+      start_period: 20s
+
+  mongodb:
+    image: mongo:6
+    container_name: bgt_mongodb_container
+    ports:
+      - 27021:27017
+    volumes:
+      - ./database/mongo/db:/data/db
+      - ./database/mongo/users.js:/docker-entrypoint-initdb.d/users.js:ro
+      - ./database/mongo/collections.js:/docker-entrypoint-initdb.d/collections.js:ro
+      - ./database/mongo/mongod.conf:/etc/mongod.conf
+
+    environment:
+      - MONGO_DATA_DIR= /data/db
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=bucket_gains_tracker_mongodb
+
+  mongodb2:
+    image: mongo:6
+    container_name: bgt_mongodb_container2
+    ports:
+      - 27022:27017
+    volumes:
+      - ./database/mongo2/db:/data/db
+      - ./database/mongo2/users.js:/docker-entrypoint-initdb.d/users.js:ro
+      - ./database/mongo2/collections.js:/docker-entrypoint-initdb.d/collections.js:ro
+      - ./database/mongo2/mongod.conf:/etc/mongod.conf
+
+    environment:
+      - MONGO_DATA_DIR= /data/db
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=bucket_gains_tracker_mongodb
