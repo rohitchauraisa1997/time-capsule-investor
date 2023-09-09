@@ -13,7 +13,7 @@ const HomePage = () => {
           <Typography variant="body1" fontFamily="Roboto" fontSize="20px" gutterBottom>
             The Time Capsule investor lets you see how much a hypothetical historical investment would be worth today.
             Find out how much money you would have made by investing in <span style={{fontWeight:"bold"}}>Nifty50</span> or
-            <span style={{fontWeight:"bold"}}> s&p500 </span> stocks until 25 years ago.
+            <span style={{fontWeight:"bold"}}> s&p500 </span> stocks upto 25 years ago.
           </Typography>
         </section>
 
@@ -47,7 +47,7 @@ const HomePage = () => {
             </li>
             <li>
               <Typography variant="body1">
-                The result shows you the value of your shares at today’s market price. This is the amount of money you would have made if you purchased this stock on the date you selected.
+              The result offers you the present market value of the shares in your bucket, reflecting the potential profit you could have earned if you had purchased these stocks during the specified time period.
               </Typography>
             </li>
           </ul>
