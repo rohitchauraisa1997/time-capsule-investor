@@ -84,3 +84,9 @@ Setup
         ```
 
 Hopefully after the above steps the project will run without any issues.
+
+Quick demo:- 
+
+
+https://github.com/rohitchauraisa1997/time-capsule-investor/assets/67869038/7e445de1-b369-4838-be5b-75e7cf72eec0
+
