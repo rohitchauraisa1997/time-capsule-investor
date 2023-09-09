@@ -3,9 +3,9 @@
 The project is kind of a mono-repo built using:- 
 1. ReactJs as the frontend.
 2. FastApi as the backend web server.
-3. MongoDB & MysqlDB for database requirements.
-4. Zerodha's kiteconnect apis for ltp and placing GTT orders.
-5. Financialmodelingprep apis for historical data.
+3. MongoDB & MySqlDB for database requirements.
+4. Zerodha's kiteconnect Apis for ltp and placing GTT orders.
+5. Financialmodelingprep Apis for historical data.
 6. HighCharts Apis for rendering Charts.
 7. cron job for updatind db
 8. docker compose for hosting
@@ -74,7 +74,7 @@ Setup
         python3 stock.py
         ```
 
-    d. For using kiteconnect apis need to generate the access_token. use /server/kiteapis/notebooks/gen_access_token.ipynb [create venv in local and  just run the cells].. ** need to have paid api access to kiteconnect apis. 
+    d. For using kiteconnect Apis need to generate the access_token. use /server/kiteapis/notebooks/gen_access_token.ipynb [create venv in local and  just run the cells].. ** need to have paid api access to kiteconnect apis. 
     
         ```
         [Video reference to understand how login works in kiteconnect apis]
