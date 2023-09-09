@@ -12,20 +12,23 @@ The project is kind of a mono-repo built using:-
 If you want to run the project in your local environment..
 
 Pre-requisites:-
-1. Kiteconnect Api Key/Secret
-2. financialmodelingprep Api Key
+1. Kiteconnect Api Key/Secret [for gtt order placement]
+2. financialmodelingprep Api Key [for histortical data]
 
 Add the following `env.json` file to `server` and `cron` directories with the appropriate api keys.
+
+```
     {
         "kite_api": {
             "api_key": "",
             "api_secret": "",
-            "access_token": "" //access_token received after logging into kite console.//for kiteconnects access_token refer point 4. 
+            "access_token": "" //access_token received after logging into kite console.//for kiteconnects access_token refer point 2d. 
         },
         "fmp_api": {
             "api_key": "" 
         }
     }
+```
 
 Setup
 
@@ -43,10 +46,13 @@ Setup
     ** The following will only work if you have added the env.json to `server` directory with correct fmp api key.
 
     a. To enter docker container:- 
+
         ```
         docker compose exec -it backend sh
         ```
+    
     b. To populate databases.
+    
         ```
         directory /code/app/services/fmp_nasdaq [To create Stockslist of s&p500 index]
         cd /code/app/services/fmp_nasdaq
@@ -58,6 +64,7 @@ Setup
         ```
 
     c. To populate the tables for each stock. 
+    
         ```
         cd /code/app/services/fmp_nasdaq
         python3 stock.py
@@ -67,6 +74,7 @@ Setup
         ```
 
     d. For using kiteconnect apis need to generate the access_token. use /server/kiteapis/notebooks/gen_access_token.ipynb [create venv in local and  just run the cells].. ** need to have paid api access to kiteconnect apis. 
+    
         ```
         [Video reference to understand how login works in kiteconnect apis]
 
