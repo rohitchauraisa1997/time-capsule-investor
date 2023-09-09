@@ -1,13 +1,14 @@
 # time-capsule-investor
 
 The project is kind of a mono-repo built using:- 
-1. FastApi as the backend web server.
-2. ReactJs as the frontend.
+1. ReactJs as the frontend.
+2. FastApi as the backend web server.
 3. MongoDB & MysqlDB for database requirements.
 4. Zerodha's kiteconnect apis for ltp and placing GTT orders.
 5. Financialmodelingprep apis for historical data.
 6. HighCharts Apis for rendering Charts.
-7. docker compose for hosting 
+7. cron job for updatind db
+8. docker compose for hosting
 
 If you want to run the project in your local environment..
 
